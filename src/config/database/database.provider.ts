@@ -2,7 +2,7 @@ import { DynamicModule } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ConnectionOptions } from "tls";
-import { Environment } from "../commom";
+import { Environment } from "../common";
 
 export const DatabaseProvider: DynamicModule = TypeOrmModule.forRootAsync({
     inject: [ConfigService],
@@ -11,6 +11,10 @@ export const DatabaseProvider: DynamicModule = TypeOrmModule.forRootAsync({
 
         const dbConfig = {
             type: 'mariadb',
+            ssl: (config.get("NODE_ENV") === 'production') ? {
+                rejectUnauthorized: false,
+                sslmode: 'require',
+            } : false as any,
             host: config.get("DB_HOST"),
             port: +config.get("DB_PORT"),
             username: config.get("DB_USER"),

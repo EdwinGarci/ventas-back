@@ -9,6 +9,7 @@ import { DatabaseModule } from './config/database/database.module';
   providers: [],
   exports: []
 })
+
 export class AppModule {
   static port: number;
   constructor(private readonly configService: ConfigService) {
