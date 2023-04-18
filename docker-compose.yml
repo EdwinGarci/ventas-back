@@ -6,23 +6,14 @@ services:
     container_name: mariadb_container
     restart: always
     environment:
-      MARIADB_ROOT_PASSWORD: my-password
-      MYSQL_DATABASE: bd-ventas
-      MYSQL_USER: admin-ventas
-      MYSQL_PASSWORD: my-secret-pw
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
     volumes:
       - mariadb-data:/var/lib/mysql
     ports:
-      - 3306:3306
-
-  adminer:
-    image: adminer
-    container_name: adminer_container
-    restart: always
-    ports:
-      - 8080:8080
-    depends_on:
-      - db
+      - "${DB_PORT}:${DB_PORT}"
 
 volumes:
   mariadb-data:
