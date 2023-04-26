@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { registerDecorator, ValidationArguments, ValidationOptions, ValidatorConstraint, ValidatorConstraintInterface } from "class-validator";
-import { Role } from "src/users/entities/role.entity";
+import { Role } from "src/role/entities/role.entity";
 
 import { Repository } from "typeorm";
 

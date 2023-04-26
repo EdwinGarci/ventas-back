@@ -1,34 +1,42 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseUUIDPipe, HttpStatus } from '@nestjs/common';
 import { UsersService } from '../services/users.service';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
+import { User } from '../entities/user.entity';
 
 @Controller('users')
 export class UsersController {
+
   constructor(private readonly usersService: UsersService) {}
 
-  @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
-  }
-
   @Get()
-  findAll() {
-    return this.usersService.findAll();
+  // @Auth(ValidRoles.Administrador)
+  getUsers(): Promise<User[]> {
+    return this.usersService.getUsers();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.usersService.findOne(+id);
+  @Get('getuser')
+  // @Auth(ValidRoles.Administrador)
+  getUser(@Body() SearchUserByUDto: SearchUserByUDto): Promise<User> {
+    return this.usersService.getUser(SearchUserByUDto);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(+id, updateUserDto);
+  @Post()
+  // @Auth(ValidRoles.Administrador)
+  createUser(@Body() createUserDto: CreateUserDto): Promise<User> {
+    return this.usersService.createUser(createUserDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.usersService.remove(+id);
+  @Patch()
+  // @Auth(ValidRoles.Administrador)
+  updateUser(@Body() updateUserDto: UpdateUserDto): Promise<User> {
+    return this.usersService.updateUser(updateUserDto);
   }
+
+  @Delete(':uuid')
+  // @Auth(ValidRoles.Administrador)
+  deleteUser(@Param('uuid', new ParseUUIDPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE, })) uid: string): Promise<Object> {
+    return this.usersService.deleteUser(uid);
+  }
+
 }
