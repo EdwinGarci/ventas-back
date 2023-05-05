@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Role } from '../entities/role.entity';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -37,12 +37,13 @@ export class RoleRepository implements RoleRepositoryI {
     const roleUpdate: Role = await this.roleRepository.preload({
       id, name
     });
+
     await this.roleRepository.save(roleUpdate)
 
     return roleUpdate;
   }
 
   async deleteRole(id: number): Promise<any> {
-    await this.roleRepository.softDelete(id);
+    return await this.roleRepository.softDelete(id);
   }
 }

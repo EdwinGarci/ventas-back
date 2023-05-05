@@ -43,18 +43,20 @@ export class RoleService {
   }
 
   async updateRole({ id, name }: UpdateRoleDto): Promise<Role> {
-    const role = await this.roleRepository.updateRole({ id, name });
-
+    const role = await this.roleRepository.getRole(id);
+    
     if (!role) {
       throw new NotFoundException('Rol no encontrado.')
     }
 
-    return role;
+    const roleUpdate = await this.roleRepository.updateRole({ id, name });
+    
+    return roleUpdate;
   }
 
   async deleteRole(id: number): Promise<Object> {
     const role = await this.roleRepository.deleteRole(id);
-    if (!role || !role.affected) {
+    if (!role.affected) {
       throw new NotFoundException('Rol no encontrado.');
     }
 

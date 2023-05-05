@@ -39,8 +39,8 @@ export class UserRepository {
   }
 
   async createUser(createUserDto: CreateUserDto): Promise<User> {
-    const { password, roles, ...userData } = createUserDto;
-    const frole = await this.roleRepository.getRole(roles);
+    const { password, role, ...userData } = createUserDto;
+    const frole = await this.roleRepository.getRole(role);
 
     const newUser = this.userRepository.create({
       ...userData, role: frole, password: bcrypt.hashSync(password, 10)
