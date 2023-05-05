@@ -70,7 +70,7 @@ export class CreateUserDto {
     message: 'El rol es requerido',
   })
   @TypeUserExists()
-  readonly role: number;
+  readonly roles: number;
 
   //Validando el campo contraseña
   @IsNotEmpty({

@@ -14,8 +14,8 @@ export class RoleController {
   }
 
   @Get(':id')
-  getRole(@Param('id') id: string): Promise<Role> {
-    return this.roleService.getRole(+id);
+  getRole(@Param('id') id): Promise<Role> {
+    return this.roleService.getRole(id);
   }
 
   @Post()
@@ -24,12 +24,12 @@ export class RoleController {
   }
 
   @Patch()
-  updateRole(@Param('id') id: string, @Body() updateRoleDto: UpdateRoleDto): Promise<Role> {
-    return this.roleService.updateRole(+id, updateRoleDto);
+  updateRole(@Body() updateRoleDto: UpdateRoleDto): Promise<Role> {
+    return this.roleService.updateRole(updateRoleDto);
   }
 
   @Delete(':id')
-  deleteRole(@Param('id') id: string) {
-    return this.roleService.deleteRole(+id);
+  deleteRole(@Param('id') id: number): Promise<Object> {
+    return this.roleService.deleteRole(id);
   }
 }

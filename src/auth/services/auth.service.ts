@@ -1,12 +1,11 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { UnauthorizedException } from '@nestjs/common/exceptions';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
-import { LoginDto } from 'src/modules/users/dto';
-import { User } from 'src/modules/users/entities/user.entity';
 import { Repository } from 'typeorm';
 import { JwtPayload } from '../interfaces/jwt-payload.interface';
 import * as bcrypt from 'bcrypt'
+import { User } from 'src/users/entities/user.entity';
+import { LoginDto } from 'src/users/dto';
 
 @Injectable()
 export class AuthService {
@@ -21,7 +20,7 @@ export class AuthService {
         const user_response = await this.userRepository.findOne({
             where: { username },
             relations: { role: true },
-            select: { username: true, password: true, img: true, uuid: true, name: true, lastname: true, role: { id: true, name: true } } //! OJO!
+            select: { username: true, password: true, uuid: true, name: true, lastname: true, role: { id: true, name: true } } //! OJO!
         });
 
         if (!user_response)
@@ -30,10 +29,10 @@ export class AuthService {
         if (!bcrypt.compareSync(password, user_response.password))
             throw new BadRequestException(['Las credenciales son incorrectas']);
 
-        const { uuid, name, img, lastname, role } = user_response;
+        const { uuid, name, lastname, role } = user_response;
 
         return {
-            user: { uuid, name, lastname, img, role },
+            user: { uuid, name, lastname, role },
             token: this.getJwtToken({ uuid: user_response.uuid })
         };
     }

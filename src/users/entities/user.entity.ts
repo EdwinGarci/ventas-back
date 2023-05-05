@@ -1,6 +1,7 @@
-import { Column, CreateDateColumn, DeleteDateColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Role } from "../../role/entities/role.entity";
 
+@Entity()
 export class User {
   @PrimaryGeneratedColumn("uuid")
     uuid: string;
@@ -23,9 +24,6 @@ export class User {
     @Column('text', { nullable: false })
     email: string;
 
-    @Column('text', { nullable: true, default: 'assets/images/user/admin.jpg' })
-    img: string;
-
     @CreateDateColumn()
     createdAt: Date;
 
@@ -35,6 +33,6 @@ export class User {
     @DeleteDateColumn()
     deletedAt: Date;
 
-    @ManyToOne(() => Role, (typeUser) => typeUser.users)
+    @ManyToOne(() => Role, userToRole => userToRole.users)
     role: Role;
 }

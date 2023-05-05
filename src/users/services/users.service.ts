@@ -28,6 +28,7 @@ export class UsersService {
 
   async getUser(username: string): Promise<User> {
     const searchUserDto: SearchUserByUDto = { username };
+
     const user_response = await this.userRepository.getUser(searchUserDto);
 
     if (!user_response) throw new NotFoundException("Algo salió mal.");
@@ -40,6 +41,18 @@ export class UsersService {
     return user_response;
   }
 
+  async createUser(createUserDto: CreateUserDto): Promise<User> {
+    const newUser = this.userRepository.createUser(createUserDto);
+
+    return newUser.catch((e) => {
+      this.handleDBErrors(e)
+    });
+  }
+
+  // async updateUser(updateUserDto: UpdateUserDto) {
+  //   const udpUser = this.userRepository
+  // }
+
   async deleteUser(uid: string): Promise<Object> {
     await this.userRepository.deleteUser(uid);
 
@@ -48,17 +61,6 @@ export class UsersService {
       message: 'Usuario eliminado exitosamente.',
     }
   }
-
-  // async createUser(createUserDto: CreateUserDto): Promise<User> {
-  //   const { password, role, ...userData } = createUserDto;
-  //   const frole = await this.roleRepository.findOne({ where: { id: role }, });
-
-  //   const newUser = this.userRepository.create({ ...userData, role: frole, password: bcrypt.hashSync(password, 10) });
-
-  //   return this.userRepository.save(newUser).catch((e) => {
-  //       this.handleDBErrors(e)
-  //   });
-  // }
 
 
 
