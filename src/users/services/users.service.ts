@@ -1,8 +1,7 @@
-import { Injectable, NotFoundException, HttpException, HttpStatus, BadRequestException, InternalServerErrorException, Inject } from '@nestjs/common';
+import { Injectable, NotFoundException, HttpException, HttpStatus, BadRequestException, InternalServerErrorException } from '@nestjs/common';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
 import { User } from '../entities/user.entity';
-import { SearchUserByUDto } from '../dto';
 import { UserRepository } from '../repositories/user.repository';
 import * as bcrypt from 'bcrypt'
 
@@ -26,17 +25,13 @@ export class UsersService {
     return users;
   }
 
-  async getUser(username: string): Promise<User> {
-    const searchUserDto: SearchUserByUDto = { username };
+  async getUser({username}: any): Promise<User> {
+    const user_response = await this.userRepository.getUserbyUsername( username );
 
-    const user_response = await this.userRepository.getUser(searchUserDto);
-
-    if (!user_response) throw new NotFoundException("Algo salió mal.");
-
-    if (user_response && user_response == null) throw new HttpException({
-      status: HttpStatus.ACCEPTED,
+    if (!user_response) throw new HttpException({
+      status: HttpStatus.NOT_FOUND,
       error: 'El usuario no existe.',
-    }, HttpStatus.ACCEPTED)
+    }, HttpStatus.NOT_FOUND)
 
     return user_response;
   }
@@ -50,7 +45,8 @@ export class UsersService {
   }
 
   // async updateUser(updateUserDto: UpdateUserDto) {
-  //   const udpUser = this.userRepository
+    
+
   // }
 
   async deleteUser(uid: string): Promise<Object> {

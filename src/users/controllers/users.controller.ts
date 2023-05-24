@@ -3,7 +3,6 @@ import { UsersService } from '../services/users.service';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
 import { User } from '../entities/user.entity';
-import { SearchUserByUDto } from '../dto';
 import { Auth } from 'src/auth/decorators';
 import { ValidRoles } from 'src/auth/interfaces/valid-roles';
 
@@ -20,8 +19,8 @@ export class UsersController {
 
   @Get('getuser')
   // @Auth(ValidRoles.Administrador)
-  getUser(@Body() SearchUserByUDto: string): Promise<User> {
-    return this.usersService.getUser(SearchUserByUDto);
+  getUserbyUsername(@Body() username: string): Promise<User> {
+    return this.usersService.getUser(username);
   }
 
   @Post()
@@ -37,7 +36,7 @@ export class UsersController {
   // }
 
   @Delete(':uuid')
-  @Auth(ValidRoles.Administrador)
+  // @Auth(ValidRoles.Administrador)
   deleteUser(@Param('uuid', new ParseUUIDPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE, })) uid: string): Promise<Object> {
     return this.usersService.deleteUser(uid);
   }

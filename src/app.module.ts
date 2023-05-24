@@ -4,13 +4,15 @@ import { DatabaseModule } from './config/database/database.module';
 import { UsersModule } from './users/users.module';
 import { RoleModule } from './role/role.module';
 import { AuthModule } from './auth/auth.module';
+import { ClientModule } from './client/client.module';
 
 @Module({
   imports: [ConfigModule.forRoot({ isGlobal: true }),
     DatabaseModule,
     UsersModule,
     RoleModule,
-    AuthModule
+    AuthModule,
+    ClientModule
   ],
   controllers: [],
   providers: [],
