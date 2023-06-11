@@ -29,11 +29,11 @@ export class UsersController {
     return this.usersService.createUser(createUserDto);
   }
 
-  // @Patch()
-  // // @Auth(ValidRoles.Administrador)
-  // updateUser(@Body() updateUserDto: UpdateUserDto): Promise<User> {
-  //   return this.usersService.updateUser(updateUserDto);
-  // }
+  @Patch()
+  // @Auth(ValidRoles.Administrador)
+  updateUser(@Body() updateUserDto: UpdateUserDto): Promise<User> {
+    return this.usersService.updateUser(updateUserDto);
+  }
 
   @Delete(':uuid')
   // @Auth(ValidRoles.Administrador)

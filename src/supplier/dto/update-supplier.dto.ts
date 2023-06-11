@@ -1,12 +1,11 @@
 import { PartialType } from '@nestjs/mapped-types';
-import { CreateClientDto } from './create-client.dto';
+import { CreateSupplierDto } from './create-supplier.dto';
 import { IsNotEmpty, IsNumber } from 'class-validator';
 
-export class UpdateClientDto extends PartialType(CreateClientDto) {
+export class UpdateSupplierDto extends PartialType(CreateSupplierDto) {
   @IsNumber()
   @IsNotEmpty({
     message: 'El campo id es requerido',
   })
   readonly id: number;
 }
-

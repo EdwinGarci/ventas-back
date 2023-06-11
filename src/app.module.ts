@@ -5,6 +5,7 @@ import { UsersModule } from './users/users.module';
 import { RoleModule } from './role/role.module';
 import { AuthModule } from './auth/auth.module';
 import { ClientModule } from './client/client.module';
+import { SupplierModule } from './supplier/supplier.module';
 
 @Module({
   imports: [ConfigModule.forRoot({ isGlobal: true }),
@@ -12,7 +13,8 @@ import { ClientModule } from './client/client.module';
     UsersModule,
     RoleModule,
     AuthModule,
-    ClientModule
+    ClientModule,
+    SupplierModule
   ],
   controllers: [],
   providers: [],

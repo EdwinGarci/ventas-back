@@ -12,7 +12,7 @@ export class User {
     @Column('text', { nullable: false })
     lastname: string;
 
-    @Column('text', { nullable: true })
+    @Column('text', { nullable: false })
     dni: string;
 
     @Column('text', { nullable: false, unique: true })

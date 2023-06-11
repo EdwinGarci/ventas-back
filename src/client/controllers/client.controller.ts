@@ -26,10 +26,10 @@ export class ClientController {
     return this.clientService.createClient(createClientDto);
   }
 
-  // @Patch()
-  // updateClient(@Body() updateClientDto: UpdateClientDto): Promise<Client> {
-  //   return this.clientService.updateClient(updateClientDto);
-  // }
+  @Patch()
+  updateClient(@Body() updateClientDto: UpdateClientDto): Promise<Client> {
+    return this.clientService.updateClient(updateClientDto);
+  }
 
   @Delete(':id')
   deleteClient(@Param('id') id: number): Promise<Object> {

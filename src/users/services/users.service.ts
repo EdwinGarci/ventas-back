@@ -44,18 +44,47 @@ export class UsersService {
     });
   }
 
-  // async updateUser(updateUserDto: UpdateUserDto) {
-    
+  async updateUser(updateUserDto: UpdateUserDto) {
+    const user = await this.userRepository.updateUser(updateUserDto);
 
-  // }
+    if (!user) {
+      throw new NotFoundException('Usuario no encontrado.');
+    }
+
+    try {
+      const updatedUser = await this.userRepository.getUserbyUid(user.uuid);
+      if (!updatedUser) {
+        throw new NotFoundException('Usuario no encontrado.');
+      }
+      return updatedUser;
+    } catch (error) {
+      const errors = [];
+      if (/(value_identification)[\s\S]+(already exists)/.test(error.detail)) errors.push('La identificación ingresada ya pertenece a un usuario.')
+
+      if (/(username)[\s\S]+(already exists)/.test(error.detail)) errors.push('El usuario ingresado ya pertenece a un registro.')
+
+      if (errors.length > 0) throw new BadRequestException(errors);
+
+      throw error;
+    }
+  }
 
   async deleteUser(uid: string): Promise<Object> {
-    await this.userRepository.deleteUser(uid);
+    const existUser = await this.userRepository.getUserbyUid(uid);
 
+    if (!existUser) {
+      return {
+        status: HttpStatus.NOT_FOUND,
+        message: 'Usuario no encontrado.',
+      };
+    }
+  
+    await this.userRepository.deleteUser(uid);
+  
     return {
       status: HttpStatus.ACCEPTED,
       message: 'Usuario eliminado exitosamente.',
-    }
+    };
   }
 
 

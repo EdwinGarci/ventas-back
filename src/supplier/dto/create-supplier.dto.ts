@@ -1,6 +1,6 @@
-import { IsEmail, IsNotEmpty, IsPhoneNumber, Length, Matches, MaxLength, MinLength } from "class-validator";
+import { IsEmail, IsNotEmpty, IsNumberString, IsPhoneNumber, Length, Matches, MaxLength, MinLength } from "class-validator";
 
-export class CreateClientDto {
+export class CreateSupplierDto {
   //Validando el campo para nombres
   @IsNotEmpty({
     message: 'El campo nombre es requerido',
@@ -14,18 +14,15 @@ export class CreateClientDto {
   @Matches(RegExp('^[A-Za-zıöüçğşİÖÜÇĞŞñÑáéíóúÁÉÍÓÚ ]+$'), { message: 'El campo nombre solo puede contener letras' })
   readonly name: string;
 
-  //Validando el campo para apellidos
+  //Validando el campo para ruc
   @IsNotEmpty({
-    message: 'El campo apellido es requerido',
+    message: 'El campo RUC es requerido',
   })
-  @MinLength(7, {
-    message: 'El campo apellidos debe contener 7 caracteres como mínimo',
+  @Length(11, 11, {
+    message: 'El campo RUC debe tener exactamente 11 caracteres',
   })
-  @MaxLength(60, {
-    message: 'El campo apellidos solo puede contener 60 caracteres como máximo',
-  })
-  @Matches(RegExp('^[A-Za-zıöüçğşİÖÜÇĞŞñÑáéíóúÁÉÍÓÚ ]+$'), { message: 'El campo apellidos solo puede contener letras' })
-  readonly lastname: string;
+  @IsNumberString()
+  readonly ruc: string;
 
   //Validando el campo para apellidos
   @IsNotEmpty({
@@ -53,5 +50,4 @@ export class CreateClientDto {
     message: 'El correo ingresado es inválido',
   })
   readonly email: string;
-
 }

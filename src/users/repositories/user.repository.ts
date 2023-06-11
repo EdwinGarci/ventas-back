@@ -36,6 +36,18 @@ export class UserRepository {
     return user_response;
   }
 
+  async getUserbyUid(uid: string): Promise<User> {
+    const user_response = await this.userRepository.findOne({
+      where: {
+        uuid: uid
+      },
+      relations: {
+        role: true,
+      }
+    });
+    return user_response;
+  }
+
   async createUser(createUserDto: CreateUserDto): Promise<User> {
     const { password, role, ...userData } = createUserDto;
     const frole = await this.roleRepository.getRole(role);
@@ -47,37 +59,31 @@ export class UserRepository {
     return this.userRepository.save(newUser)
   }
 
-  // async updateUser(updateUserDto: UpdateUserDto) {
-  //   const { password, id_role, ...userData } = updateUserDto;
-  //   const role_user = await this.roleRepository.getRole(id_role);
+  async updateUser(updateUserDto: UpdateUserDto) {
+    const { password, id_role, ...userData } = updateUserDto;
+    const role_user = await this.roleRepository.getRole(id_role);
 
-  //   let userUpdate: User;
+    let userUpdate: User;
 
-  //   if (password != "") {
-  //     if (password.length < 6) throw new HttpException({
-  //       statusCode: HttpStatus.BAD_REQUEST,
-  //       message: 'La contraseña debe contener como mínimo 6 caracteres.',
-  //     }, HttpStatus.ACCEPTED)
-  //     userUpdate = await this.userRepository.preload({
-  //       ...userData, role: role_user, password: bcrypt.hashSync(password, 10)
-  //     });
-  //   } else {
-  //     userUpdate = await this.userRepository.preload({
-  //       ...userData, role: role_user
-  //     });
-  //   }
+    if (password != "" && password.length >= 6 ) {
+        userUpdate = await this.userRepository.preload({
+            ...userData, role: role_user, password: bcrypt.hashSync(password, 10)
+        });
+    } else {
+        userUpdate = await this.userRepository.preload({
+            ...userData, role: role_user
+        });
+    }
 
-    
+    if (!userUpdate) {
+      return null;
+    }
 
-  // }
-
-  
+    return await this.userRepository.save(userUpdate);
+  }
 
   async deleteUser(uid: string): Promise<void> {
     const deleteResponse = await this.userRepository.softDelete(uid);
-    if (!deleteResponse.affected) {
-      throw new NotFoundException('Usuario no encontrado.');
-    }
   }
 
 }

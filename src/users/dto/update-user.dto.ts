@@ -14,7 +14,7 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
   @IsNotEmpty({
     message: 'El campo nombre es requerido',
   })
-  @MinLength(2, {
+  @MinLength(3, {
     message: 'El campo nombre debe contener 3 caracteres como mínimo',
   })
   @MaxLength(60, {
@@ -78,9 +78,12 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
   readonly id_role: number;
 
   //Validando el campo contraseña
+  @IsOptional()
+  // @MinLength(6, {
+  //   message: 'La contraseña debe contener 6 caracteres como mínimo',
+  // })
   @MaxLength(20, {
     message: 'La contraseña solo puede contener 20 caracteres como máximo',
   })
-  @IsOptional()
   readonly password: string;
 }

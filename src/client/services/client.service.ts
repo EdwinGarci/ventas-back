@@ -32,7 +32,7 @@ export class ClientService {
     const mclient = await this.clientRepository.getClient(id);
 
     //Mensaje para cuando salga mal la consulta
-    if (!mclient) throw new NotFoundException("La atención no existe.");
+    if (!mclient) throw new NotFoundException("El cliente no existe.");
 
     return mclient;
   }
@@ -45,10 +45,22 @@ export class ClientService {
     });
   }
 
+  async updateClient(updateClientDto: UpdateClientDto): Promise<Client> {
+    const newClient = this.clientRepository.updateClient(updateClientDto);
+
+    if (!newClient) {
+      throw new NotFoundException('Cliente no encontrado.');
+    }
+
+    return newClient.catch((e) => {
+      this.handleDBErrors(e)
+    });
+  }
+
   async deleteClient(id): Promise<Object> {
     const deleteResponse = await this.clientRepository.deleteClient(id);
     if (!deleteResponse.affected) {
-      throw new NotFoundException('Atención no encontrada.');
+      throw new NotFoundException('Cliente no encontrada.');
     }
 
     return {

@@ -1,7 +1,7 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm"
 
 @Entity()
-export class Client {
+export class Supplier {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -9,17 +9,17 @@ export class Client {
   name: string
 
   @Column('text', { nullable: false })
-  lastname: string;
-
+  ruc: string
+  
   @Column('text', { nullable: false })
   address: string;
-
+  
   @Column('text', { nullable: false, unique: true })
   phone: string;
-
+  
   @Column('text', { nullable: false })
   email: string;
-
+  
   @CreateDateColumn()
   createdAt: Date;
 
@@ -28,5 +28,4 @@ export class Client {
 
   @DeleteDateColumn()
   deletedAt: Date;
-
 }

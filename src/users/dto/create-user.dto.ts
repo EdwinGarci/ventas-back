@@ -6,7 +6,7 @@ export class CreateUserDto {
   @IsNotEmpty({
     message: 'El campo nombre es requerido',
   })
-  @MinLength(2, {
+  @MinLength(3, {
     message: 'El campo nombre debe contener 3 caracteres como mínimo',
   })
   @MaxLength(60, {
