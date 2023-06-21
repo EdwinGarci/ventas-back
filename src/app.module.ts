@@ -6,6 +6,9 @@ import { RoleModule } from './role/role.module';
 import { AuthModule } from './auth/auth.module';
 import { ClientModule } from './client/client.module';
 import { SupplierModule } from './supplier/supplier.module';
+import { OrdersModule } from './orders/orders.module';
+import { ServiceModule } from './service/service.module';
+import { PaymentModule } from './payment/payment.module';
 
 @Module({
   imports: [ConfigModule.forRoot({ isGlobal: true }),
@@ -14,7 +17,10 @@ import { SupplierModule } from './supplier/supplier.module';
     RoleModule,
     AuthModule,
     ClientModule,
-    SupplierModule
+    SupplierModule,
+    OrdersModule,
+    ServiceModule,
+    PaymentModule
   ],
   controllers: [],
   providers: [],

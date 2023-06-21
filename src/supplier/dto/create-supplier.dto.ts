@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsNumberString, IsPhoneNumber, Length, Matches, MaxLength, MinLength } from "class-validator";
+import { IsEmail, IsNotEmpty, IsNumber, IsNumberString, IsPhoneNumber, Length, Matches, MaxLength, MinLength } from "class-validator";
 
 export class CreateSupplierDto {
   //Validando el campo para nombres
@@ -50,4 +50,24 @@ export class CreateSupplierDto {
     message: 'El correo ingresado es inválido',
   })
   readonly email: string;
+
+  @IsNotEmpty({
+    message: 'El campo tipo de producto es requerido',
+  })
+  @MinLength(3, {
+    message: 'El campo tipo de producto debe contener 3 caracteres como mínimo',
+  })
+  @MaxLength(200, {
+    message: 'El campo tipo de producto solo puede contener 200 caracteres como máximo',
+  })
+  @Matches(RegExp('^[A-Za-zıöüçğşİÖÜÇĞŞñÑáéíóúÁÉÍÓÚ,;.0-9\u00F1ñ -]+$'), { message: 'El campo tipo de producto solo puede contener letras' })
+  readonly type_product: string;
+
+  // @IsNumber({}, {
+  //   message: 'La orden debe ser numerica.'
+  // })
+  // @IsNotEmpty({
+  //   message: 'La orden es requerida.',
+  // })
+  // readonly orders: number;
 }

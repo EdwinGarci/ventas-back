@@ -2,33 +2,36 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { SupplierService } from '../services/supplier.service';
 import { CreateSupplierDto } from '../dto/create-supplier.dto';
 import { UpdateSupplierDto } from '../dto/update-supplier.dto';
+import { Supplier } from '../entities/supplier.entity';
 
 @Controller('supplier')
 export class SupplierController {
   constructor(private readonly supplierService: SupplierService) {}
 
-  @Post()
-  create(@Body() createSupplierDto: CreateSupplierDto) {
-    return this.supplierService.create(createSupplierDto);
-  }
-
   @Get()
-  findAll() {
-    return this.supplierService.findAll();
+  // @Auth(ValidRoles.Administrador)
+  getSuppliers(): Promise<Supplier[]> {
+    return this.supplierService.getSuppliers();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.supplierService.findOne(+id);
+  // @Auth(ValidRoles.Administrador)
+  getSupplier(@Param('id') id,): Promise<Supplier> {
+    return this.supplierService.getSupplier(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSupplierDto: UpdateSupplierDto) {
-    return this.supplierService.update(+id, updateSupplierDto);
+  @Post()
+  createSupplier(@Body() createSupplierDto: CreateSupplierDto): Promise<Supplier> {
+    return this.supplierService.createSupplier(createSupplierDto);
+  }
+
+  @Patch()
+  updateSupplier(@Body() updateSupplierDto: UpdateSupplierDto): Promise<Supplier> {
+    return this.supplierService.updateSupplier(updateSupplierDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.supplierService.remove(+id);
+  deleteSupplier(@Param('id') id: number): Promise<Object> {
+    return this.supplierService.deleteSupplier(id);
   }
 }

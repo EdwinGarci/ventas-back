@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsPhoneNumber, Length, Matches, MaxLength, MinLength } from "class-validator";
+import { IsEmail, IsNotEmpty, IsNumber, IsPhoneNumber, Length, Matches, MaxLength, MinLength } from "class-validator";
 
 export class CreateClientDto {
   //Validando el campo para nombres
@@ -11,7 +11,7 @@ export class CreateClientDto {
   @MaxLength(60, {
     message: 'El campo nombre solo puede contener 60 caracteres como máximo',
   })
-  @Matches(RegExp('^[A-Za-zıöüçğşİÖÜÇĞŞñÑáéíóúÁÉÍÓÚ ]+$'), { message: 'El campo nombre solo puede contener letras' })
+  @Matches(RegExp('^[A-Za-zıöüçğşİÖÜÇĞŞñÑáéíóúÁÉÍÓÚ,;.0-9\u00F1ñ -]+$'), { message: 'El campo nombre solo puede contener letras' })
   readonly name: string;
 
   //Validando el campo para apellidos
@@ -24,7 +24,7 @@ export class CreateClientDto {
   @MaxLength(60, {
     message: 'El campo apellidos solo puede contener 60 caracteres como máximo',
   })
-  @Matches(RegExp('^[A-Za-zıöüçğşİÖÜÇĞŞñÑáéíóúÁÉÍÓÚ ]+$'), { message: 'El campo apellidos solo puede contener letras' })
+  @Matches(RegExp('^[A-Za-zıöüçğşİÖÜÇĞŞñÑáéíóúÁÉÍÓÚ,;.0-9\u00F1ñ -]+$'), { message: 'El campo apellidos solo puede contener letras' })
   readonly lastname: string;
 
   //Validando el campo para apellidos

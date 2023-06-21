@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Role } from '../entities/role.entity';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -28,14 +28,14 @@ export class RoleRepository implements RoleRepositoryI {
     });
   }
 
-  async createRole({ name }: CreateRoleDto): Promise<Role> {
-    const newRole = this.roleRepository.create({ name });
+  async createRole({ name, description }: CreateRoleDto): Promise<Role> {
+    const newRole = this.roleRepository.create({ name, description });
     return this.roleRepository.save(newRole);
   }
 
-  async updateRole({ id, name }: UpdateRoleDto): Promise<Role> {
+  async updateRole({ id, name, description }: UpdateRoleDto): Promise<Role> {
     const roleUpdate: Role = await this.roleRepository.preload({
-      id, name
+      id, name, description
     });
 
     await this.roleRepository.save(roleUpdate)

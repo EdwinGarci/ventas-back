@@ -9,6 +9,9 @@ export class Role {
     @Column({ nullable: false })
     name: string;
 
+    @Column({ nullable: false })
+    description: string;
+
     @CreateDateColumn()
     createdAt: Date;
 

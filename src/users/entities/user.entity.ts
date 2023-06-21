@@ -1,9 +1,10 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Role } from "../../role/entities/role.entity";
+import { Order } from "src/orders/entities/order.entity";
 
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn("uuid")
+    @PrimaryGeneratedColumn("uuid")
     uuid: string;
 
     @Column('text', { nullable: false })
@@ -35,4 +36,7 @@ export class User {
 
     @ManyToOne(() => Role, userToRole => userToRole.users)
     role: Role;
+
+    @OneToMany(() => Order, orders => orders.user)
+    orders: Order;
 }

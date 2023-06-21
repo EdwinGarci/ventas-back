@@ -51,7 +51,7 @@ export class ClientRepository {
     return await this.clientRepository.save(newClient)
   }
 
-  async updateClient({ id, name, lastname, address, email, phone }: UpdateClientDto): Promise<Client> {
+  async updateClient({ id, name, lastname, address, phone, email }: UpdateClientDto): Promise<Client> {
     const clientUpdate: Client = await this.clientRepository.preload({
       id, name, lastname, address, email, phone
     });
