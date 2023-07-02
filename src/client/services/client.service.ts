@@ -38,23 +38,21 @@ export class ClientService {
   }
 
   async createClient(createClientDto: CreateClientDto): Promise<Client> {
-    const newClient = this.clientRepository.createClient(createClientDto);
+    const newClient = await this.clientRepository.createClient(createClientDto);
 
-    return newClient.catch((e) => {
-      this.handleDBErrors(e)
-    });
+    return newClient
   }
 
-  async updateClient(updateClientDto: UpdateClientDto): Promise<Client> {
-    const newClient = this.clientRepository.updateClient(updateClientDto);
-
-    if (!newClient) {
+  async updateClient({id, name, lastname, address, email, phone }: UpdateClientDto): Promise<Client> {
+    const client = await this.clientRepository.getClient(id);
+    
+    if (!client) {
       throw new NotFoundException('Cliente no encontrado.');
     }
 
-    return newClient.catch((e) => {
-      this.handleDBErrors(e)
-    });
+    const clientUpdate = await this.clientRepository.updateClient({id, name, lastname, address, email, phone});
+
+    return clientUpdate;
   }
 
   async deleteClient(id): Promise<Object> {

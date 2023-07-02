@@ -40,6 +40,9 @@ export class CreateClientDto {
   @Matches(RegExp('^[A-Za-zıöüçğşİÖÜÇĞŞñÑáéíóúÁÉÍÓÚ,;.0-9\u00F1ñ -]+$'), { message: 'El campo dirección solo puede contener letras' })
   readonly address: string;
 
+  @IsNotEmpty({
+    message: 'El campo teléfono es requerido',
+  })
   @IsPhoneNumber()
   @Length(12)
   @Matches(/^(\+51)/)

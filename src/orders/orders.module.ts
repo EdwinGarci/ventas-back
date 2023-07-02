@@ -12,11 +12,15 @@ import { ClientRepository } from 'src/client/repositories/client.repository';
 import { UserRepository } from 'src/users/repositories/user.repository';
 import { Payment } from 'src/payment/entities/payment.entity';
 import { PaymentRepository } from 'src/payment/repositories/payment.repository';
+import { Client } from 'src/client/entities/client.entity';
+import { User } from 'src/users/entities/user.entity';
+import { Role } from 'src/role/entities/role.entity';
+import { RoleRepository } from 'src/role/repositories/role.repository';
 
 @Module({
   imports: [
     AuthModule, 
-    TypeOrmModule.forFeature([Order, OrderDetail, Supplier, Payment])],
+    TypeOrmModule.forFeature([Order, OrderDetail, Supplier, Payment, Client, User, Role])],
   controllers: [OrdersController],
   providers: [
     OrdersService,
@@ -25,6 +29,7 @@ import { PaymentRepository } from 'src/payment/repositories/payment.repository';
     ClientRepository,
     UserRepository,
     PaymentRepository,
+    RoleRepository,
   ]
 })
 export class OrdersModule {}

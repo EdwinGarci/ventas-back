@@ -14,6 +14,7 @@ import { ClientRepository } from './repositories/client.repository';
   providers: [
     ClientService,
     ClientRepository,
-  ]
+  ],
+  exports: [ClientRepository]
 })
 export class ClientModule {}

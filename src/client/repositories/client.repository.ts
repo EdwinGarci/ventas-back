@@ -56,11 +56,9 @@ export class ClientRepository {
       id, name, lastname, address, email, phone
     });
 
-    await this.clientRepository.save(clientUpdate)
-
-    return clientUpdate;
+    return await this.clientRepository.save(clientUpdate); 
   }
-
+  
   async deleteClient(id: number): Promise<any> {
     return await this.clientRepository.softDelete(id);
   }

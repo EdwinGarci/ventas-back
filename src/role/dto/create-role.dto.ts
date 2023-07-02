@@ -23,6 +23,6 @@ export class CreateRoleDto {
   @MaxLength(60, {
     message: 'El campo descripción solo puede contener 60 caracteres como máximo',
   })
-  @Matches(RegExp('^[A-Za-zıöüçğşİÖÜÇĞŞñÑáéíóúÁÉÍÓÚ ]+$'), { message: 'El campo descripción solo puede contener letras' })
+  @Matches(RegExp('^[A-Za-zıöüçğşİÖÜÇĞŞñÑáéíóúÁÉÍÓÚ,;.0-9\u00F1ñ -]+$'), { message: 'El campo descripción tiene un carácter no aceptado' })
   readonly description: string;
 }
